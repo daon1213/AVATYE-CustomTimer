@@ -97,9 +97,9 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 if (!isFinished) {
                     val elapsedMilliseconds =
-                        totalMilliseconds - millisUntilFinished
+                        totalMilliseconds - millisUntilFinished // 경과시간 = 전체 시간 - 완료 될때까지의 시간
                     val calculatedProgress =
-                        (elapsedMilliseconds * progressPerSecond / 1000).toInt()
+                        (elapsedMilliseconds * progressPerSecond / 1000).toInt() // 계산시간 = 경과시간 * 계산된 프로그래스
                     progress = startProgress + calculatedProgress
                     Log.d("Timer", "onTick - Progress: $progress")
                     isTimerRunning = true
@@ -118,10 +118,11 @@ class MainActivity : AppCompatActivity() {
                 isTimerRunning = false
                 timerView.updateProgressAnimated(100)
                 showTimerDialog("타이머가 종료되었습니다.")
+                savedProgress = 0
                 GlobalScope.launch(Dispatchers.Main) {
                     delay(800L)
                     timerView.updateProgressAnimated(0)
-                    savedProgress = 0
+                    progress = 0
                 }
             }
         }
